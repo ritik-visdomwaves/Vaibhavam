@@ -122,7 +122,7 @@ const Hero = () => {
                     className="relative z-10 mt-20 container mx-auto px-4 md:px-6"
                 >
                     <div className="max-w-4xl mx-auto text-center">
-                        <motion.div
+                        {/* <motion.div
                             custom={0}
                             variants={textVariants}
                             initial="hidden"
@@ -133,7 +133,7 @@ const Hero = () => {
                             <span className="text-sm text-white/60 tracking-wide font-medium">
                                 Smart Homes. Simplified Living
                             </span>
-                        </motion.div>
+                        </motion.div> */}
 
                         <motion.div
                             custom={1}
