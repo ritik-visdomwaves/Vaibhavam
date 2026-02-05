@@ -29,22 +29,23 @@ function HomeServices() {
         </div>
 
         {/* Cards Container */}
-        <div className="max-w-7xl mx-auto flex gap-6 h-[420px]">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-6 min-h-[420px] md:h-[420px]">
           {services.map((service, index) => {
-            let widthClass = index === 0 ? 'w-1/3' : 'w-2/3' 
+            // Default widths for desktop
+            let widthClass = index === 0 ? 'md:w-1/3' : 'md:w-2/3'
 
             if (hoveredIndex !== null) {
               if (hoveredIndex === index) {
-                widthClass = 'w-2/3' 
+                widthClass = 'md:w-2/3'
               } else {
-                widthClass = 'w-1/3' 
+                widthClass = 'md:w-1/3'
               }
             }
 
             return (
               <div
                 key={index}
-                className={`relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-[1000ms] ease-in-out ${widthClass}`}
+                className={`relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-[1000ms] ease-in-out w-full aspect-[4/3] md:aspect-auto will-change-[width] ${widthClass}`}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
@@ -63,11 +64,11 @@ function HomeServices() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
                 {/* Content */}
-                <div className="absolute bottom-8 left-8 right-8 text-white">
-                  <h3 className="text-3xl font-semibold mb-2">
+                <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 right-6 md:right-8 text-white">
+                  <h3 className="text-2xl md:text-3xl font-semibold mb-2">
                     {service.title}
                   </h3>
-                  <p className="text-gray-200 max-w-md">
+                  <p className="text-sm md:text-base text-gray-200 max-w-md">
                     {service.desc}
                   </p>
                 </div>
@@ -75,6 +76,7 @@ function HomeServices() {
             )
           })}
         </div>
+
       </section>
     </>
   )

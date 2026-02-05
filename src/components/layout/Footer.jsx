@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter, FaYoutube, FaPinterest } from 'react-icons/fa'
 
 function Footer() {
@@ -10,7 +11,7 @@ function Footer() {
             <div className="max-w-7xl mx-auto">
                 <div className="border-t border-gray-800 pb-10"></div>
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
-                
+
                     {/* Column 1: Visit Us (Width: 5 cols) */}
                     <div className="md:col-span-5 space-y-6">
                         <h3 className="text-xl font-medium mb-6 ps-3">Visit Us</h3>
@@ -38,11 +39,11 @@ function Footer() {
                     <div className="md:col-span-2 space-y-6">
                         <h3 className="text-xl font-medium mb-6">Menu</h3>
                         <ul className="space-y-3 text-gray-400 text-sm">
-                            <li><a href="#" className="hover:text-white transition-colors">Home</a></li>
-                            <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-                            <li><a href="#" className="hover:text-white transition-colors">Services</a></li>
-                            <li><a href="#" className="hover:text-white transition-colors">Contact Us</a></li>
-                            <li><a href="#" className="hover:text-white transition-colors">Blogs</a></li>
+                            <li><Link to="/" className="hover:text-white transition-colors">Home</Link></li>
+                            <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
+                            <li><Link to="/services" className="hover:text-white transition-colors">Services</Link></li>
+                            <li><Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
+                            <li><Link to="/blog" className="hover:text-white transition-colors">Blogs</Link></li>
                         </ul>
                     </div>
 
@@ -76,9 +77,9 @@ function Footer() {
                 <div className="pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 gap-4">
                     <p>© {currentYear} Vaibhavam. All Rights Reserved.</p>
                     <div className="flex gap-6">
-                        <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
-                        <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                        <a href="#" className="hover:text-white transition-colors">Alexa Privacy Policy</a>
+                        <Link to="/terms" className="hover:text-white transition-colors">Terms & Conditions</Link>
+                        <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+                        <Link to="/alexa-privacy" className="hover:text-white transition-colors">Alexa Privacy Policy</Link>
                     </div>
                 </div>
             </div>
