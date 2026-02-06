@@ -1,6 +1,6 @@
 import React, { useRef, memo } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import OptimizedImage from '../common/OptimizedImage'
+import OptimizedImage from '../../shared/components/OptimizedImage'
 import { BANNER_SLIDES } from '../../constants'
 
 const BannerSlide = memo(({ slide, index }) => {

@@ -1,8 +1,8 @@
 import React, { useRef, useState, memo } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import InfiniteHero from '../ui/infinite-hero'
-import OptimizedImage from '../common/OptimizedImage';
+import InfiniteHero from '../../shared/ui/infinite-hero'
+import OptimizedImage from '../../shared/components/OptimizedImage';
 import { ABOUT_CARDS, JOURNEY_ITEMS } from '../../constants';
 
 // Variants

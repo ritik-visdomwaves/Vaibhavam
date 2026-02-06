@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import ScrollToTop from './components/layout/ScrollToTop'
-import Loader from './components/common/Loader'
+import Loader from './shared/components/Loader'
 import Blog from './components/company/Blog'
 
 // Lazy loaded components for better initial load performance

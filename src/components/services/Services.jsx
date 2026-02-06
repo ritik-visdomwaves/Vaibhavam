@@ -1,9 +1,9 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import Section from '../common/Section'
-import GlassCard, { FeatureItem } from '../common/GlassCard'
-import ScrollableCards from '../common/ScrollableCards'
-import OptimizedImage from '../common/OptimizedImage'
+import Section from '../../shared/components/Section'
+import GlassCard, { FeatureItem } from '../../shared/components/GlassCard'
+import ScrollableCards from '../../shared/components/ScrollableCards'
+import OptimizedImage from '../../shared/components/OptimizedImage'
 import { CORE_SERVICES, FADE_UP_VARIANTS } from '../../constants'
 import { FaHome, FaClipboardList, FaFileInvoice, FaTools, FaCheckDouble, FaCogs, FaHeadset, FaCloudUploadAlt, FaShieldAlt } from 'react-icons/fa'
 

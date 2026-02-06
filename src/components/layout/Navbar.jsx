@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [activeDropdown, setActiveDropdown] = useState(null);
     const tagline = "Future - Ready - Living";
 
     const solutions = [
@@ -20,12 +21,21 @@ const Navbar = () => {
         { name: "Blog", path: "/blog" }
     ];
 
+    const handleLinkClick = () => {
+        setIsOpen(false);
+        setActiveDropdown(null);
+    };
+
     return (
         <>
             <nav className="fixed top-0 left-0 w-full backdrop-blur-xl text-white px-4 md:px-6 py-4 flex items-center justify-between z-[100] border-b border-white/10">
 
                 {/* Logo */}
-                <Link to="/" className="flex flex-col cursor-pointer group z-[110]">
+                <Link
+                    to="/"
+                    onClick={handleLinkClick}
+                    className="flex flex-col cursor-pointer group z-[110]"
+                >
                     <h1 className="text-xl md:text-2xl font-bold tracking-wider bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent group-hover:from-blue-200 group-hover:via-purple-200 group-hover:to-pink-200 transition-all duration-500">
                         VAIBHAVAM
                     </h1>
@@ -50,23 +60,32 @@ const Navbar = () => {
 
                 {/* Center Menu (Desktop) */}
                 <div className="hidden md:flex items-center gap-8 bg-neutral-900/60 transition-all duration-300 backdrop-blur-md px-10 py-2.5 rounded-full border border-white/20 hover:border-white/40 shadow-lg">
-                    <Link to="/" className="text-white font-semibold hover:text-blue-200 transition-colors">
+                    <Link
+                        to="/"
+                        onClick={handleLinkClick}
+                        className="text-white font-semibold hover:text-blue-200 transition-colors"
+                    >
                         Home
                     </Link>
 
-                    <div className="relative group">
+                    <div
+                        className="relative group"
+                        onMouseEnter={() => setActiveDropdown('solutions')}
+                        onMouseLeave={() => setActiveDropdown(null)}
+                    >
                         <div className="flex items-center gap-1.5 text-white font-medium group-hover:text-blue-200 cursor-pointer py-1 transition-colors">
                             <span>Solutions</span>
-                            <ChevronDown size={14} className="transition-transform duration-300 group-hover:rotate-180" />
+                            <ChevronDown size={14} className={`transition-transform duration-300 ${activeDropdown === 'solutions' ? 'rotate-180' : ''}`} />
                         </div>
 
                         {/* Dropdown Menu */}
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-72 bg-neutral-950/95 backdrop-blur-3xl border border-white/10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden translate-y-2 group-hover:translate-y-0">
+                        <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-4 w-72 bg-neutral-950/95 backdrop-blur-3xl border border-white/10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-300 z-50 overflow-hidden ${activeDropdown === 'solutions' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-2'}`}>
                             <div className="p-2">
                                 {solutions.map((item, index) => (
                                     <Link
                                         key={index}
                                         to={item.path}
+                                        onClick={handleLinkClick}
                                         className="block px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all"
                                     >
                                         {item.name}
@@ -76,23 +95,32 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    <Link to="/services" className="text-white font-medium hover:text-blue-200 transition-colors">
+                    <Link
+                        to="/services"
+                        onClick={handleLinkClick}
+                        className="text-white font-medium hover:text-blue-200 transition-colors"
+                    >
                         Services
                     </Link>
 
-                    <div className="relative group">
+                    <div
+                        className="relative group"
+                        onMouseEnter={() => setActiveDropdown('company')}
+                        onMouseLeave={() => setActiveDropdown(null)}
+                    >
                         <div className="flex items-center gap-1.5 text-white font-medium group-hover:text-blue-200 cursor-pointer py-1 transition-colors">
                             <span>Company</span>
-                            <ChevronDown size={14} className="transition-transform duration-300 group-hover:rotate-180" />
+                            <ChevronDown size={14} className={`transition-transform duration-300 ${activeDropdown === 'company' ? 'rotate-180' : ''}`} />
                         </div>
 
                         {/* Dropdown Menu */}
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-48 bg-neutral-950/95 backdrop-blur-3xl border border-white/10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden translate-y-2 group-hover:translate-y-0">
+                        <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-4 w-48 bg-neutral-950/95 backdrop-blur-3xl border border-white/10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-300 z-50 overflow-hidden ${activeDropdown === 'company' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-2'}`}>
                             <div className="p-2">
                                 {company.map((item, index) => (
                                     <Link
                                         key={index}
                                         to={item.path}
+                                        onClick={handleLinkClick}
                                         className="block px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all"
                                     >
                                         {item.name}
@@ -106,7 +134,11 @@ const Navbar = () => {
 
                 {/* Right Side Tools */}
                 <div className="flex items-center gap-4">
-                    <Link to="/contact" className="hidden sm:block bg-white text-black px-6 py-2 rounded-full font-medium hover:bg-gray-200 transition-all shadow-lg hover:shadow-white/10">
+                    <Link
+                        to="/contact"
+                        onClick={handleLinkClick}
+                        className="hidden sm:block bg-white text-black px-6 py-2 rounded-full font-medium hover:bg-gray-200 transition-all shadow-lg hover:shadow-white/10"
+                    >
                         Contact Us
                     </Link>
 
@@ -132,7 +164,7 @@ const Navbar = () => {
                             <div className="flex flex-col gap-6">
                                 <Link
                                     to="/"
-                                    onClick={() => setIsOpen(false)}
+                                    onClick={handleLinkClick}
                                     className="text-2xl font-semibold border-b border-white/10 pb-4"
                                 >
                                     Home
@@ -145,7 +177,7 @@ const Navbar = () => {
                                             <Link
                                                 key={index}
                                                 to={item.path}
-                                                onClick={() => setIsOpen(false)}
+                                                onClick={handleLinkClick}
                                                 className="text-lg text-gray-300 hover:text-white"
                                             >
                                                 {item.name}
@@ -156,7 +188,7 @@ const Navbar = () => {
 
                                 <Link
                                     to="/services"
-                                    onClick={() => setIsOpen(false)}
+                                    onClick={handleLinkClick}
                                     className="text-2xl font-semibold border-b border-white/10 pb-4"
                                 >
                                     Services
@@ -169,7 +201,7 @@ const Navbar = () => {
                                             <Link
                                                 key={index}
                                                 to={item.path}
-                                                onClick={() => setIsOpen(false)}
+                                                onClick={handleLinkClick}
                                                 className="text-lg text-gray-300 hover:text-white"
                                             >
                                                 {item.name}
@@ -180,7 +212,7 @@ const Navbar = () => {
 
                                 <Link
                                     to="/contact"
-                                    onClick={() => setIsOpen(false)}
+                                    onClick={handleLinkClick}
                                     className="mt-4 bg-white text-black px-8 py-4 rounded-full font-bold text-center text-xl shadow-xl"
                                 >
                                     Contact Us

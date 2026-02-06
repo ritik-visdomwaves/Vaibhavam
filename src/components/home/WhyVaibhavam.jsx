@@ -1,5 +1,5 @@
-import Section from '../common/Section'
-import ScrollableCards from '../common/ScrollableCards'
+import Section from '../../shared/components/Section'
+import ScrollableCards from '../../shared/components/ScrollableCards'
 import { WHY_CARDS } from '../../constants'
 
 function WhyVaibhavam() {
