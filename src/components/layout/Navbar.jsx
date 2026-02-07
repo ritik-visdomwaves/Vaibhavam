@@ -34,7 +34,7 @@ const Navbar = () => {
                 <Link
                     to="/"
                     onClick={handleLinkClick}
-                    className="flex flex-col cursor-pointer group z-[110]"
+                    className="flex flex-col cursor-pointer group z-[10]"
                 >
                     <h1 className="text-xl md:text-2xl font-bold tracking-wider bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent group-hover:from-blue-200 group-hover:via-purple-200 group-hover:to-pink-200 transition-all duration-500">
                         VAIBHAVAM
@@ -151,77 +151,150 @@ const Navbar = () => {
                     </button>
                 </div>
 
-                {/* Mobile Menu Overlay */}
-                <AnimatePresence>
-                    {isOpen && (
-                        <motion.div
-                            initial={{ opacity: 0, x: "100%" }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: "100%" }}
-                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="fixed inset-0 bg-black z-[100] flex flex-col p-8 pt-28 overflow-y-auto"
-                        >
-                            <div className="flex flex-col gap-6">
-                                <Link
-                                    to="/"
-                                    onClick={handleLinkClick}
-                                    className="text-2xl font-semibold border-b border-white/10 pb-4"
-                                >
-                                    Home
-                                </Link>
-
-                                <div className="space-y-4">
-                                    <h3 className="text-gray-500 uppercase tracking-widest text-xs font-bold">Solutions</h3>
-                                    <div className="flex flex-col gap-3 pl-4">
-                                        {solutions.map((item, index) => (
-                                            <Link
-                                                key={index}
-                                                to={item.path}
-                                                onClick={handleLinkClick}
-                                                className="text-lg text-gray-300 hover:text-white"
-                                            >
-                                                {item.name}
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <Link
-                                    to="/services"
-                                    onClick={handleLinkClick}
-                                    className="text-2xl font-semibold border-b border-white/10 pb-4"
-                                >
-                                    Services
-                                </Link>
-
-                                <div className="space-y-4">
-                                    <h3 className="text-gray-500 uppercase tracking-widest text-xs font-bold">Company</h3>
-                                    <div className="flex flex-col gap-3 pl-4">
-                                        {company.map((item, index) => (
-                                            <Link
-                                                key={index}
-                                                to={item.path}
-                                                onClick={handleLinkClick}
-                                                className="text-lg text-gray-300 hover:text-white"
-                                            >
-                                                {item.name}
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <Link
-                                    to="/contact"
-                                    onClick={handleLinkClick}
-                                    className="mt-4 bg-white text-black px-8 py-4 rounded-full font-bold text-center text-xl shadow-xl"
-                                >
-                                    Contact Us
-                                </Link>
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
             </nav>
+
+            {/* Mobile Menu Overlay */}
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: "-100%" }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: "-100%" }}
+                        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                        className="fixed inset-x-0 top-0 bg-black text-white z-[10000] flex flex-col p-8 pt-32 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-b border-white/10 rounded-b-[2rem] max-h-[90vh] overflow-y-auto"
+                    >
+                        {/* Mobile Logo (Top Left) */}
+                        <div className="absolute top-8 left-8">
+                            <Link
+                                to="/"
+                                onClick={handleLinkClick}
+                                className="flex flex-col cursor-pointer group"
+                            >
+                                <h1 className="text-xl font-bold tracking-wider bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
+                                    VAIBHAVAM
+                                </h1>
+                                <div className="flex overflow-hidden">
+                                    {tagline.split("").map((char, index) => (
+                                        <motion.span
+                                            key={index}
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{
+                                                duration: 0.3,
+                                                delay: index * 0.05,
+                                                ease: "easeOut"
+                                            }}
+                                            className="text-[10px] text-gray-400"
+                                        >
+                                            {char === " " ? "\u00A0" : char}
+                                        </motion.span>
+                                    ))}
+                                </div>
+                            </Link>
+                        </div>
+
+                        {/* Close Button */}
+                        <button
+                            onClick={() => setIsOpen(false)}
+                            className="absolute top-8 right-8 p-2 text-white/70 hover:text-white transition-colors"
+                        >
+                            <X size={32} />
+                        </button>
+
+                        <div className="flex flex-col gap-6">
+                            <Link
+                                to="/"
+                                onClick={handleLinkClick}
+                                className="text-2xl font-medium hover:text-blue-200 transition-colors"
+                            >
+                                Home
+                            </Link>
+
+                            {/* Solutions Accordion */}
+                            <div className="space-y-4">
+                                <button
+                                    onClick={() => setActiveDropdown(activeDropdown === 'solutions' ? null : 'solutions')}
+                                    className="w-full flex items-center justify-between text-2xl font-medium hover:text-blue-200 transition-colors"
+                                >
+                                    <span>Solutions</span>
+                                    <ChevronDown
+                                        size={24}
+                                        className={`transition-transform duration-300 ${activeDropdown === 'solutions' ? 'rotate-180' : ''}`}
+                                    />
+                                </button>
+                                <AnimatePresence>
+                                    {activeDropdown === 'solutions' && (
+                                        <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: "auto", opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            className="overflow-hidden"
+                                        >
+                                            <div className="flex flex-col gap-4 pl-4 pt-2 border-l border-white/10 ml-1">
+                                                {solutions.map((item, index) => (
+                                                    <Link
+                                                        key={index}
+                                                        to={item.path}
+                                                        onClick={handleLinkClick}
+                                                        className="text-lg text-gray-400 hover:text-white"
+                                                    >
+                                                        {item.name}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+
+                            <Link
+                                to="/services"
+                                onClick={handleLinkClick}
+                                className="text-2xl font-medium hover:text-blue-200 transition-colors"
+                            >
+                                Services
+                            </Link>
+
+                            {/* Company Accordion */}
+                            <div className="space-y-4">
+                                <button
+                                    onClick={() => setActiveDropdown(activeDropdown === 'company' ? null : 'company')}
+                                    className="w-full flex items-center justify-between text-2xl font-medium hover:text-blue-200 transition-colors"
+                                >
+                                    <span>Company</span>
+                                    <ChevronDown
+                                        size={24}
+                                        className={`transition-transform duration-300 ${activeDropdown === 'company' ? 'rotate-180' : ''}`}
+                                    />
+                                </button>
+                                <AnimatePresence>
+                                    {activeDropdown === 'company' && (
+                                        <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: "auto", opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            className="overflow-hidden"
+                                        >
+                                            <div className="flex flex-col gap-4 pl-4 pt-2 border-l border-white/10 ml-1">
+                                                {company.map((item, index) => (
+                                                    <Link
+                                                        key={index}
+                                                        to={item.path}
+                                                        onClick={handleLinkClick}
+                                                        className="text-lg text-gray-400 hover:text-white"
+                                                    >
+                                                        {item.name}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </>
     );
 };
