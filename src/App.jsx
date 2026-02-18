@@ -1,10 +1,11 @@
-import React, { Suspense, lazy } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import React, { Suspense, lazy, useState, useEffect } from 'react'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import ScrollToTop from './components/layout/ScrollToTop'
 import Loader from './shared/components/Loader'
 import Blog from './components/company/Blog'
+import Login from './components/auth/Login'
 
 // Lazy loaded components for better initial load performance
 const Home = lazy(() => import('./components/home/Home'));
@@ -20,11 +21,36 @@ const Villas = lazy(() => import('./components/solutions/Villas'));
 const Developers = lazy(() => import('./components/solutions/Developers'));
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('isLoggedIn') === 'true';
+  });
+
+  const handleLogin = (status) => {
+    setIsAuthenticated(status);
+    localStorage.setItem('isLoggedIn', status);
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.removeItem('isLoggedIn');
+    window.location.href = '/'; // Simple way to reset app state
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <BrowserRouter>
+        <Suspense fallback={<Loader />}>
+          <Login onLogin={handleLogin} />
+        </Suspense>
+      </BrowserRouter>
+    );
+  }
+
   return (
     <BrowserRouter>
       <ScrollToTop />
       <Suspense fallback={<Loader />}>
-        <Navbar />
+        <Navbar onLogout={handleLogout} />
 
         <main className="relative">
           <Routes>
@@ -40,6 +66,9 @@ function App() {
             <Route path="/solutions/communities" element={<Communities />} />
             <Route path="/solutions/villas" element={<Villas />} />
             <Route path="/solutions/developers" element={<Developers />} />
+
+            {/* Catch all for authenticated users */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
 
@@ -50,3 +79,4 @@ function App() {
 }
 
 export default App
+

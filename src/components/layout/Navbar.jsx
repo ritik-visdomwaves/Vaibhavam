@@ -3,7 +3,7 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Navbar = () => {
+const Navbar = ({ onLogout }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null);
     const tagline = "Future - Ready - Living";
@@ -141,6 +141,15 @@ const Navbar = () => {
                     >
                         Contact Us
                     </Link>
+
+                    {onLogout && (
+                        <button
+                            onClick={onLogout}
+                            className="hidden sm:block bg-neutral-800 text-white px-6 py-2 rounded-full font-medium hover:bg-neutral-700 transition-all border border-white/10"
+                        >
+                            Logout
+                        </button>
+                    )}
 
                     {/* Hamburger Menu Icon */}
                     <button
@@ -291,6 +300,18 @@ const Navbar = () => {
                                     )}
                                 </AnimatePresence>
                             </div>
+
+                            {onLogout && (
+                                <button
+                                    onClick={() => {
+                                        onLogout();
+                                        handleLinkClick();
+                                    }}
+                                    className="text-2xl font-medium text-red-400 hover:text-red-300 transition-colors text-left"
+                                >
+                                    Logout
+                                </button>
+                            )}
                         </div>
                     </motion.div>
                 )}
