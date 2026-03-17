@@ -15,7 +15,7 @@ const Login = ({ onLogin }) => {
 
         // Simulated login delay
         setTimeout(() => {
-            if (email === 'visdomwaves@gmail.com' && password === '1947') {
+            if (email === 'visdomwaves@gmail.com' && password === 'india@1947') {
                 onLogin(true);
             } else {
                 setError('Invalid email or password. Please try again.');
